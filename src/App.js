@@ -78,7 +78,6 @@ function App() {
             onChange={handleInput}
             type="text"
             className="input__field"
-            autoFocus
           />
         </section>
 
