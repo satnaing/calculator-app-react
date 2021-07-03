@@ -25,8 +25,8 @@ function App() {
 
   const handleNum = (e) => {
     const val = e.target.innerText;
-    const nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    if (nums.includes(parseInt(val))) {
+    const nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
+    if (nums.includes(val.toString())) {
       if (typeof inputValue === "number") {
         setInputValue(val);
         setCalStr("");
@@ -42,7 +42,7 @@ function App() {
     e.preventDefault();
     setCalStr(inputValue);
     let x = inputValue.replace(/x/g, "*");
-    setInputValue(evaluate(x));
+    setInputValue(evaluate(x).toLocaleString());
   };
 
   const handleReset = () => {

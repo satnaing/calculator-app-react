@@ -181,7 +181,6 @@ header h1 {
   position: absolute;
   opacity: 0.5;
   margin-top: 0.25rem;
-  /* margin-right: 2.5rem; */
   font-size: var(--small-font-size);
 }
 
