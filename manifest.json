@@ -1,6 +1,6 @@
 {
-  "short_name": "Calculator App",
-  "name": "Calculator App with React",
+  "short_name": "Calculator",
+  "name": "Calculator App by Sat Naing",
   "icons": [
     {
       "src": "maskable_icon.png",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#3a4764",
+  "background_color": "#e6e6e6"
 }
