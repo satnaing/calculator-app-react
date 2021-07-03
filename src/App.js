@@ -42,6 +42,7 @@ function App() {
     e.preventDefault();
     setCalStr(inputValue);
     let x = inputValue.replace(/x/g, "*");
+    x = x.replace(/,/g, "");
     setInputValue(evaluate(x).toLocaleString());
   };
 

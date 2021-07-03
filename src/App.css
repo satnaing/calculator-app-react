@@ -202,6 +202,7 @@ header h1 {
   font-size: var(--big-font-size);
   font-weight: var(--font-bold);
   padding: 0.5rem;
+  outline: none;
   border: none;
   border-radius: 0.5rem;
 }
