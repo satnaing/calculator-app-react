@@ -8,6 +8,7 @@ function App() {
   const [isDark, setIsDark] = useState(theme);
   const [inputValue, setInputValue] = useState("");
   const [calStr, setCalStr] = useState("");
+  const [calResult, setCalResult] = useState(false);
 
   useEffect(() => {
     if (isDark) document.body.classList.add("dark-theme");
@@ -26,24 +27,39 @@ function App() {
   const handleNum = (e) => {
     const val = e.target.innerText;
     const nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
+
+    // Check if input is number or operators
     if (nums.includes(val.toString())) {
-      if (typeof inputValue === "number") {
+      // Check if input is right after the result
+      // if so, and the input is number, clear the input field.
+      if (calResult) {
         setInputValue(val);
         setCalStr("");
+        setCalResult(false);
       } else {
         setInputValue(inputValue + val);
       }
     } else {
       setInputValue(` ${inputValue} ${val} `);
+      setCalResult(false);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setCalStr(inputValue);
+
+    // Replace x with * to calculate multiplication
     let x = inputValue.replace(/x/g, "*");
+
+    // Remove comma to calculate properly
     x = x.replace(/,/g, "");
+
+    // toLocaleString is for comma separation
     setInputValue(evaluate(x).toLocaleString());
+
+    // Nums are calculated, thus calResult is set true
+    setCalResult(true);
   };
 
   const handleReset = () => {
@@ -52,6 +68,7 @@ function App() {
   };
 
   const handleDelete = () => {
+    // Delete the last character from inputValue
     const deleteInput = inputValue.toString().trim().slice(0, -1);
     setInputValue(deleteInput);
     setCalStr("");
@@ -62,12 +79,16 @@ function App() {
       <header>
         <h1>calc</h1>
         <div className="theme__container" onClick={handleTheme}>
-          <i className="bx bx-sun"></i>
+          {/* <i className="bx bx-sun"></i>  style={color:"#ca5502"} */}
+          {/* style={{ color: "#ca5502" }} */}
+          <i className="bx bx-sun bx-tada"></i>
           <i
             className={`bx ${isDark ? "bx-toggle-right" : "bx-toggle-left"}`}
             id="theme-button"
           ></i>
-          <i className="bx bx-moon"></i>
+          {/* <i className="bx bx-moon"></i> */}
+          <i className="bx bx-moon bx-flashing"></i>
+          {/* style={{ color: "#d03f2f" }} */}
         </div>
       </header>
 
