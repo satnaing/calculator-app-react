@@ -205,6 +205,7 @@ header h1 {
   outline: none;
   border: none;
   border-radius: 0.5rem;
+  user-select: none;
 }
 
 .btn:active {
