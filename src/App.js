@@ -9,6 +9,7 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [calStr, setCalStr] = useState("");
   const [calResult, setCalResult] = useState(false);
+  const [singleNum, setSingleNum] = useState("");
 
   useEffect(() => {
     if (isDark) document.body.classList.add("dark-theme");
@@ -25,15 +26,20 @@ function App() {
   };
 
   const handleNum = (e) => {
-    const val = e.target.innerText;
+    let val = e.target.innerText;
     const nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
 
     // Check if input is number or operators
     if (nums.includes(val.toString())) {
+      // Validation for multiple dots (.)
+      if (singleNum.includes(".") && val === ".") return;
+      if (singleNum === "" && val === ".") val = "0.";
+      setSingleNum(singleNum + val);
+
       // Check if input is right after the result
       // if so, and the input is number, clear the input field.
       if (calResult) {
-        setInputValue(val);
+        setInputValue(singleNum + val);
         setCalStr("");
         setCalResult(false);
       } else {
@@ -42,11 +48,20 @@ function App() {
     } else {
       setInputValue(` ${inputValue} ${val} `);
       setCalResult(false);
+      setSingleNum("");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Set single number after submit
+    setSingleNum("");
+
+    // Return inputValue if no calculation is made
+    const operators = ["+", "-", "x", "/"];
+    const calcExp = operators.some((op) => inputValue.includes(op));
+    if (!calcExp) return inputValue;
 
     // trim extra spaces
     let inputString = inputValue.trim();
@@ -76,12 +91,25 @@ function App() {
   const handleReset = () => {
     setCalStr("");
     setInputValue("");
+    setSingleNum("");
   };
 
   const handleDelete = () => {
     // Delete the last character from inputValue
     const deleteInput = inputValue.toString().trim().slice(0, -1);
+    let singleInput;
+
+    // Check if inputValue is the last character
+    if (deleteInput.length > 1) {
+      // if inputValue is not last character,
+      // last number (including decimal) will be current single number
+      singleInput = deleteInput.match(/\d+\.?\d?(?=\D*$)/)[0];
+    } else {
+      singleInput = deleteInput;
+    }
+
     setInputValue(deleteInput);
+    setSingleNum(singleInput);
     setCalStr("");
   };
 
@@ -90,16 +118,12 @@ function App() {
       <header>
         <h1>calc</h1>
         <div className="theme__container" onClick={handleTheme}>
-          {/* <i className="bx bx-sun"></i>  style={color:"#ca5502"} */}
-          {/* style={{ color: "#ca5502" }} */}
           <i className="bx bx-sun bx-tada"></i>
           <i
             className={`bx ${isDark ? "bx-toggle-right" : "bx-toggle-left"}`}
             id="theme-button"
           ></i>
-          {/* <i className="bx bx-moon"></i> */}
           <i className="bx bx-moon bx-flashing"></i>
-          {/* style={{ color: "#d03f2f" }} */}
         </div>
       </header>
 
