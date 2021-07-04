@@ -47,16 +47,26 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCalStr(inputValue);
+
+    let inputString = inputValue.trim();
 
     // Replace x with * to calculate multiplication
-    let x = inputValue.replace(/x/g, "*");
+    inputString = inputValue.replace(/x/g, "*");
 
     // Remove comma to calculate properly
-    x = x.replace(/,/g, "");
+    inputString = inputString.replace(/,/g, "");
+
+    // remove extra operators (+ - * /) before calculation
+    inputString = inputString.replace(/.+?(?=\d)/, "");
+
+    // remove extra operators (+ - * /) after calculation
+    inputString = inputString.replace(/(?<=(\d+)(?!.*\d)).*/, "");
 
     // toLocaleString is for comma separation
-    setInputValue(evaluate(x).toLocaleString());
+    setInputValue(evaluate(inputString).toLocaleString());
+
+    // Set calculation string on top of the result
+    setCalStr(inputString.replace(/\*/g, "x"));
 
     // Nums are calculated, thus calResult is set true
     setCalResult(true);
