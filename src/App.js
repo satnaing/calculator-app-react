@@ -48,6 +48,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // trim extra spaces
     let inputString = inputValue.trim();
 
     // Replace x with * to calculate multiplication
@@ -110,6 +111,7 @@ function App() {
             onChange={handleInput}
             type="text"
             className="input__field"
+            readOnly
           />
         </section>
 
