@@ -9,7 +9,7 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [calStr, setCalStr] = useState("");
   const [calResult, setCalResult] = useState(false);
-  const [singleNum, setSingleNum] = useState("");
+  const [currentNum, setCurrentNum] = useState("");
 
   useEffect(() => {
     if (isDark) document.body.classList.add("dark-theme");
@@ -32,14 +32,14 @@ function App() {
     // Check if input is number or operators
     if (nums.includes(val.toString())) {
       // Validation for multiple dots (.)
-      if (singleNum.includes(".") && val === ".") return;
-      if (singleNum === "" && val === ".") val = "0.";
-      setSingleNum(singleNum + val);
+      if (currentNum.includes(".") && val === ".") return;
+      if (currentNum === "" && val === ".") val = "0.";
+      setCurrentNum(currentNum + val);
 
       // Check if input is right after the result
       // if so, and the input is number, clear the input field.
       if (calResult) {
-        setInputValue(singleNum + val);
+        setInputValue(currentNum + val);
         setCalStr("");
         setCalResult(false);
       } else {
@@ -48,15 +48,15 @@ function App() {
     } else {
       setInputValue(` ${inputValue} ${val} `);
       setCalResult(false);
-      setSingleNum("");
+      setCurrentNum("");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Set single number after submit
-    setSingleNum("");
+    // Set current number after submit
+    setCurrentNum("");
 
     // Return inputValue if no calculation is made
     const operators = ["+", "-", "x", "/"];
@@ -91,7 +91,7 @@ function App() {
   const handleReset = () => {
     setCalStr("");
     setInputValue("");
-    setSingleNum("");
+    setCurrentNum("");
   };
 
   const handleDelete = () => {
@@ -109,7 +109,7 @@ function App() {
     }
 
     setInputValue(deleteInput);
-    setSingleNum(singleInput);
+    setCurrentNum(singleInput);
     setCalStr("");
   };
 
